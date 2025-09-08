@@ -173,11 +173,11 @@ private:
   
   // Cache de información de archivos
   struct FileCache {
-    char filename[16];//MAX_FILENAME_LENGTH
+    char filename[12];//MAX_FILENAME_LENGTH
     uint32_t size;
     uint32_t timestamp;
     uint16_t checksum;
-  } cache[3]; //era 10
+  } cache[2]; //era 10
   uint8_t cacheSize;
   
   // Métodos de cache

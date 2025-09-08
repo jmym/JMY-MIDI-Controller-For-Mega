@@ -15,6 +15,7 @@ Midi_Controller::Midi_Controller()
     midiThruEnabled(false), sysExAutoResponse(true), lastActivityTime(0)
 {
   instance = this;
+  uint8_t sysExBuffer[24];  // Era 64 → 24 (40 bytes ahorrados)
 }
 
 Midi_Controller::~Midi_Controller() {

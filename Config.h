@@ -163,37 +163,38 @@ enum class MenuType {
 
 // ==================== ESTRUCTURAS DE DATOS ====================
 struct EncoderConfig {
-  uint8_t channel;           // Canal MIDI (1-16)
-  uint8_t control;        // Número de CC/Note (0-127)
-  uint8_t cc;               // Número CC o Note
-  ControlType controlType;   // Tipo de control (CC/Note/Pitch)
-  bool isPan;               // true si es encoder de pan
+  uint8_t channel : 4;           // Canal MIDI (1-16)
+  uint8_t control : 7;        // Número de CC/Note (0-127)
+  //uint8_t cc;               // Número CC o Note
+  uint8_t controlType : 2;   // Tipo de control (CC/Note/Pitch)
+  bool isPan : 1;               // true si es encoder de pan
   int8_t value;            // Valor actual local (0-127)
   int8_t dawValue;         // Valor recibido del DAW (0-127)
   int8_t minValue;         // Valor mínimo (0-127)
   int8_t maxValue;         // Valor máximo (0-127)
-  bool isMute;              // Estado mute
-  bool isSolo;              // Estado solo
+  bool isMute : 1;              // Estado mute
+  bool isSolo : 1;              // Estado solo
   uint16_t trackColor;      // Color del track
-  uint16_t panColor;        // Color del pan (puede ser diferente)
-  char trackName[9];        // Nombre del track (8 chars + null terminator)
+ // uint16_t panColor;        // Color del pan (puede ser diferente)
+  char trackName[5];        // Nombre del track (8 chars + null terminator)
   
   // Constructor por defecto
   EncoderConfig() {
-    channel = 1;
-    control = 0;
-    cc = 7;
-    controlType = CT_CC;
-    isPan = false;
-    value = 64;
-    dawValue = 64;
-    minValue = 0;
-    maxValue = 127;
-    isMute = false;
-    isSolo = false;
-    trackColor = 0xFFFF;
-    panColor = 0xFFFF;
-    strcpy(trackName, "Track");
+  channel = 1;
+  control = 7;           // Reemplaza 'cc = 7'
+  controlType = CT_CC;
+  isPan = false;
+  value = 64;
+  dawValue = 64;
+  minValue = 0;
+  maxValue = 127;
+  isMute = false;
+  isSolo = false;
+  trackColor = 0xFFFF;
+  strncpy(trackName, "Trk", 5); // Nombre corto
+  trackName[5] = '\0';
+    //panColor = 0xFFFF;
+    //strcpy(trackName, "Track");
   }
 };
 

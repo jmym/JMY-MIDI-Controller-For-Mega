@@ -95,7 +95,7 @@ void EncoderManager::syncFromDAW(uint8_t track, uint8_t bank, uint8_t value, uin
     if (track < NUM_ENCODERS && bank < NUM_BANKS) {
         encoderBanks[bank][track].dawValue = value;
         encoderBanks[bank][track].trackColor = color;
-        encoderBanks[bank][track].panColor = color;
+        //encoderBanks[bank][track].panColor = color;
     }
 }
 
@@ -113,10 +113,10 @@ uint8_t EncoderManager::getEncoderDAWValue(uint8_t track, uint8_t bank) {
 }
 
 void EncoderManager::syncNameFromDAW(uint8_t track, uint8_t bank, const char* name) {
-    if (track < NUM_ENCODERS && bank < NUM_BANKS && name) {
-        strncpy(encoderBanks[bank][track].trackName, name, 
-                sizeof(encoderBanks[bank][track].trackName) - 1);
-        encoderBanks[bank][track].trackName[sizeof(encoderBanks[bank][track].trackName) - 1] = '\0';
+     if (track < NUM_ENCODERS && bank < NUM_BANKS && name) {
+    // Copiar máximo 5 caracteres + null terminator
+        strncpy(encoderBanks[bank][track].trackName, name, 5);
+        encoderBanks[bank][track].trackName[5] = '\0';
     }
 }
 

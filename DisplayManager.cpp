@@ -121,7 +121,7 @@ void DisplayManager::drawMainScreen(const EncoderConfig encoders[NUM_ENCODERS],
                  volEncoder.isSolo || volEncoder.isMute);
     drawVUMeter(i, vuLevels[i], volEncoder.trackColor);
     
-    drawPanBar(i, panEncoder.dawValue, panEncoder.panColor);
+    drawPanBar(i, panEncoder.dawValue, panEncoder.trackColor);
     
     drawChannelInfo(i, volEncoder);
   }
@@ -196,6 +196,12 @@ void DisplayManager::drawChannelInfo(uint8_t channel, const EncoderConfig& confi
   snprintf(valueStr, sizeof(valueStr), "%d", config.dawValue);
   drawCenteredText(valueStr, x, y + 20, CHANNEL_WIDTH, 12, COLOR_LIGHT_GRAY, FONT_SIZE_SMALL);
   
+  // Mostrar nombre abreviado del track
+  char nameDisplay[7];
+  snprintf(nameDisplay, sizeof(nameDisplay), "%.5s", config.trackName);
+  drawCenteredText(nameDisplay, x, y + 40, CHANNEL_WIDTH, 12, 
+                   COLOR_LIGHT_GRAY, FONT_SIZE_SMALL);
+                   
   if (config.isMute) {
     tft.fillCircle(x + 5, y + 35, 4, COLOR_RED);
     drawCenteredText("M", x, y + 30, 12, 12, COLOR_WHITE, FONT_SIZE_SMALL);
@@ -212,7 +218,7 @@ void DisplayManager::drawHeader() {
 }
 
 void DisplayManager::drawMTCInfo(const MtcData& mtc) {
-  char timeStr[11];//12
+  char timeStr[12];//12
   snprintf(timeStr, sizeof(timeStr), "%02d:%02d:%02d:%02d", 
            mtc.hours, mtc.minutes, mtc.seconds, mtc.frames);
   

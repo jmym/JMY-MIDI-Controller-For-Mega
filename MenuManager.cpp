@@ -287,7 +287,7 @@ void MenuManager::drawMenuItems() {
       display.fillRect(5, yPos - 3, TFT_WIDTH - 10, MENU_ITEM_HEIGHT - 4, bgColor);
     }
     
-    char itemText[32];//50
+    char itemText[24];//50
     if ((uint16_t)item.name < RAMEND) {
       strncpy_P(itemText, item.name, sizeof(itemText));
     } else {
@@ -781,9 +781,9 @@ void MenuManager::actionSetControlNumber() {
   
   // Incrementar número de control
   config.control = (config.control + 1) % 128;
-  config.cc = config.control;
+  //config.cc = config.control;
   
-  char msg[32];
+  char msg[20];//32
   snprintf(msg, sizeof(msg), "Control: %d", config.control);
   instance->showMessage(msg, 1500);
 }
@@ -839,7 +839,7 @@ void MenuManager::actionSetBrightness() {
   instance->appConfig->brightness = instance->tempBrightness;
   display.setBrightness(instance->tempBrightness);
   
-  char msg[32];
+  char msg[20];//32
   snprintf(msg, sizeof(msg), "Brillo: %d%%", instance->tempBrightness);
   instance->showMessage(msg, 1500);
 }

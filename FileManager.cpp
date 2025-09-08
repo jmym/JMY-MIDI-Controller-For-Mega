@@ -4,9 +4,13 @@ FileManager::FileManager()
   : sdInitialized(false), sdCardPresent(false), totalSpace(0), freeSpace(0),
     filesWritten(0), filesRead(0), errorCount(0), loggingEnabled(false), cacheSize(0)
 {
-  memset(workBuffer, 0, sizeof(workBuffer));
+ /* memset(workBuffer, 0, sizeof(workBuffer));
   memset(pathBuffer, 0, sizeof(pathBuffer));
-  strcpy(logFilename, "/logs/system.log");
+  strcpy(logFilename, "/logs/system.log");*/
+  // REDUCIDO:
+  uint8_t workBuffer[32];    // Era 128 → 32 (96 bytes ahorrados)
+  char pathBuffer[24];       // Era 32 → 24 (8 bytes ahorrados)
+  strcpy(logFilename, "sys.log"); // Sin path largo
   clearCache();
 }
 
@@ -617,7 +621,7 @@ bool FileManager::verifyFileIntegrity(const char* filename) {
 }
 
 void FileManager::createBackup(const char* filename) {
-  char backupName[64];
+  char backupName[24];//64
   snprintf(backupName, sizeof(backupName), "%s%s", filename, BACKUP_EXTENSION);
   
   if (fileExists(filename)) {
@@ -752,7 +756,7 @@ bool FileManager::writeLogEntry(const char* message) {
     return false;
   }
   
-  char logEntry[64];//128
+  char logEntry[48];//128
   unsigned long timestamp = millis() / 1000;
   
   snprintf(logEntry, sizeof(logEntry), "[%lu] %s\n", timestamp, message);
